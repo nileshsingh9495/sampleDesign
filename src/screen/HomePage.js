@@ -1,10 +1,13 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 
 const HomePage = () => {
   return (
-    <View style={{flex:1}}>
-      <Text style={styles.textStyle}>HomePage</Text>
+    <View style={styles.container}>
+      <View>
+      <Text style={styles.mornigText}>Good Morning</Text>
+
+      </View>
     </View>
   );
 };
@@ -12,7 +15,16 @@ const HomePage = () => {
 export default HomePage;
 
 const styles = StyleSheet.create({
-  textStyle: {
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    // justifyContent: 'center',
+    alignItems: 'center',
+  },
+  mornigText: {
+    fontSize:34,
+    fontWeight:'700',
+    fontFamily: 'SF-Pro-Rounded-Regular',
     color: 'black',
   },
 });

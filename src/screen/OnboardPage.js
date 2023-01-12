@@ -1,28 +1,21 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
   View,
-  PixelRatio,
   FlatList,
-  useWindowDimensions,
+  TouchableOpacity,
+  Dimensions
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+
 import IntroImage1 from '../assets/intro/intro1.svg';
 import IntroImage2 from '../assets/intro/intro2.svg';
 import IntroImage3 from '../assets/intro/intro3.svg';
 import IntroImage4 from '../assets/intro/intro4.svg';
 import RightArrow from '../assets/intro/right_arrow.svg';
-import {Dimensions} from 'react-native';
 
 const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
-
-// import OffersDefaultIcon from 'assets/icons/icon-no-offers.svg';
-
-// var image = getImage({
-//   width: PixelRatio.getPixelSizeForLayoutSize(46),
-//   height: PixelRatio.getPixelSizeForLayoutSize(100),
-// });
 
 const INTRO_DATA = [
   {
@@ -58,8 +51,8 @@ const INTRO_DATA = [
     color: '#fff',
   },
 ];
+
 const RenderIntroView = ({data = {}}) => {
-  // const {width} = useWindowDimensions();
   const {id, title, description, image, color = 'brown'} = data;
   return (
     <View
@@ -68,82 +61,55 @@ const RenderIntroView = ({data = {}}) => {
       {image}
       <Text style={styles.titleStyle}>{title}</Text>
       <Text style={styles.descriptionStyle}>{description}</Text>
-
-      {/* <View style={styles.descriptionBox}>
-        <Text style={styles.descriptionStyle}>{description}</Text>
-        <View style={styles.circle} />
-      </View> */}
     </View>
   );
 };
-// const RenderIntroView = () => {
-//   return (
-//     <View style={styles.renderViewContainer}>
-//       <IntroImage1 />
-//       <Text style={styles.titleStyle}>
-//         Scan anything in HD, wherever you are...
-//       </Text>
-//       <Text style={styles.descriptionStyle}>
-//         Scan and organize your work documents in structured folders. Scan single
-//         or multiple documents in one swift go. Merge scans into PDFs, reorder
-//         pages and share them on the fly.
-//       </Text>
-//       <View style={styles.circle} />
-//     </View>
-//   );
-// };
+const RenderRightArrow = ({isArrow = false}) => {
+  if (!isArrow) return null;
+  const navigation = useNavigation();
+
+  return (
+    <TouchableOpacity onPress={()=> navigation.navigate('Home')} style={styles.arrowViewStyle}>
+      <RightArrow />
+    </TouchableOpacity>
+  );
+};
+const RenderPaginationDots = ({data = [], currentIndex = 0}) => {
+  if (!data.length) return null;
+  return data?.map((item, index) => {
+    return (
+      <View
+        key={index}
+        style={[
+          styles.circle,
+          {backgroundColor: currentIndex == index ? '#49A6FC' : '#9B9B9B'},
+        ]}
+      />
+    );
+  });
+};
+
 const OnboardPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  console.log('CHECK ', currentIndex);
+  const shouldDisplayArrow = currentIndex == INTRO_DATA.length - 1;
   return (
     <View style={styles.container}>
-      {/* width={10} height={10} color={disabledIconColor}  */}
-      {/* <View style={{paddingTop: 159}}> */}
       <FlatList
         data={INTRO_DATA}
         horizontal
         showsHorizontalScrollIndicator={false}
         pagingEnabled
-        // renderItem={renderIntroView}
         renderItem={({item}) => <RenderIntroView data={item} />}
         keyExtractor={item => item.id}
-        // initialNumToRender={1}
         bounces={false}
         onScroll={e => {
           const x = e.nativeEvent.contentOffset.x;
-          console.log('x / width', (x / width).toFixed(0));
           setCurrentIndex((x / width).toFixed(0));
         }}
       />
-
       <View style={styles.circleContainer}>
-        {/* <RenderIntroView /> */}
-        {INTRO_DATA?.map((item, index) => {
-          return (
-            <View
-              key={index}
-              style={[
-                styles.circle,
-                {backgroundColor: currentIndex == index ? '#49A6FC' : 'black'},
-              ]}
-            />
-          );
-        })}
-        {currentIndex == INTRO_DATA.length - 1 ? (
-          <View
-            style={{
-              backgroundColor: '#49A6FC',
-              width: 55,
-              height: 55,
-              borderRadius: 50,
-              justifyContent: 'center',
-              alignItems: 'center',
-              position: 'absolute',
-              right: 35,
-            }}>
-            <RightArrow />
-          </View>
-        ) : null}
+        <RenderPaginationDots currentIndex={currentIndex} data={INTRO_DATA} />
+        <RenderRightArrow isArrow={shouldDisplayArrow} />
       </View>
     </View>
   );
@@ -154,7 +120,7 @@ export default OnboardPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: 'pink',
+    backgroundColor: '#fff',
   },
   renderViewContainer: {
     flex: 1,
@@ -162,7 +128,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingTop: 120,
-    // backgroundColor: 'skyblue',
   },
   titleStyle: {
     color: 'black',
@@ -184,8 +149,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   descriptionStyle: {
-    color: 'black',
-    // marginTop: 20,
+    color: '#000',
     fontSize: 14,
     marginTop: 25,
     textAlign: 'center',
@@ -200,13 +164,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    // width:width/2
   },
   circle: {
-    backgroundColor: 'green',
     width: 13,
     height: 13,
     borderRadius: 50,
     marginLeft: 15,
+  },
+  arrowViewStyle: {
+    backgroundColor: '#49A6FC',
+    width: 55,
+    height: 55,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    right: 35,
   },
 });

@@ -25,7 +25,7 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={genericStackOptions}
-          initialRouteName="Onboard">
+          initialRouteName="Home">
           <Stack.Screen name="Home" component={HomePage} />
           <Stack.Screen name="Onboard" component={OnboardPage} />
         </Stack.Navigator>
