@@ -79,17 +79,8 @@ const RenderInfo = () => {
 const ScanCard = ({data = {}}) => {
   const {image, id, posted} = data;
   return (
-    <View
-      style={{
-        width: width / 2,
-        height: width / 2,
-        marginRight: 16,
-      }}
-      key={id}>
-      <Image
-        source={image}
-        style={{width: '100%', height: '100%', borderRadius: 8}}
-      />
+    <View style={styles.scanCardView} key={id}>
+      <Image source={image} style={styles.scanImages} />
       <Text style={styles.postedText}>{posted}</Text>
     </View>
   );
@@ -242,7 +233,15 @@ const styles = StyleSheet.create({
     fontFamily: 'SF-Pro-Rounded-Bold',
     color: '#000',
     marginBottom: 10,
-
-    // marginTop: 5,
+  },
+  scanCardView: {
+    width: width / 2,
+    height: width / 2,
+    marginRight: 16,
+  },
+  scanImages: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 8,
   },
 });

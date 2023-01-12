@@ -1,12 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React, {useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+import {View, TouchableOpacity, StyleSheet, Dimensions} from 'react-native';
 
 import HomePage from './HomePage';
 import FeedsImage from '../assets/menu/Feeds.svg';
@@ -64,36 +59,13 @@ const MyTabBar = ({state, descriptors, navigation}) => {
             testID={options.tabBarTestID}
             onPress={onPress}
             onLongPress={onLongPress}
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
+            style={styles.myTabBarView}>
             {label.toLowerCase() === 'add' ? (
               <View>
-                <View
-                  style={{
-                    position: 'absolute',
-                    backgroundColor: '#49A6FC',
-                    left: -26,
-                    top: -60,
-                    width: 55,
-                    height: 55,
-                    borderRadius: 50,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  {getIcon(label, isFocused)}
-                </View>
+                <View style={styles.addView}>{getIcon(label, isFocused)}</View>
               </View>
             ) : (
-              <View
-                style={{
-                  marginTop: 10,
-                  marginBottom: 7,
-                }}>
-                {getIcon(label, isFocused)}
-              </View>
+              <View style={styles.menuIcon}>{getIcon(label, isFocused)}</View>
             )}
           </TouchableOpacity>
         );
@@ -101,7 +73,7 @@ const MyTabBar = ({state, descriptors, navigation}) => {
     </View>
   );
 };
-export default function BottomTabNavigator() {
+const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
       initialRouteName="Upload"
@@ -110,13 +82,8 @@ export default function BottomTabNavigator() {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarLabelPosition: 'beside-icon',
-        tabBarLabelStyle: {
-          fontWeight: '700',
-          fontSize: 16,
-        },
-        tabBarStyle: {
-          borderRadius: 15,
-        },
+        tabBarLabelStyle: styles.tabBarLabelStyle,
+        tabBarStyle: styles.tabBarStyle,
         tabBarIconStyle: {display: 'none'},
       }}>
       <Tab.Screen name="Feeds" component={HomePage} />
@@ -124,7 +91,9 @@ export default function BottomTabNavigator() {
       <Tab.Screen name="Setting" component={Setting} />
     </Tab.Navigator>
   );
-}
+};
+
+export default BottomTabNavigator;
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -143,5 +112,32 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 1,
     borderColor: '#333B42',
+  },
+  tabBarLabelStyle: {
+    fontWeight: '700',
+    fontSize: 16,
+  },
+  tabBarStyle: {
+    borderRadius: 15,
+  },
+  myTabBarView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  addView: {
+    position: 'absolute',
+    backgroundColor: '#49A6FC',
+    left: -26,
+    top: -60,
+    width: 55,
+    height: 55,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  menuIcon: {
+    marginTop: 10,
+    marginBottom: 7,
   },
 });
