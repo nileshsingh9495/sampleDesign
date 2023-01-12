@@ -6,6 +6,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomePage from './src/screen/HomePage';
 import OnboardPage from './src/screen/OnboardPage';
+import BottomTabNavigator from './src/screen/BottomTabNavigator';
 
 const Stack = createNativeStackNavigator();
 const genericStackOptions = {
@@ -26,7 +27,7 @@ const App = () => {
         <Stack.Navigator
           screenOptions={genericStackOptions}
           initialRouteName="Home">
-          <Stack.Screen name="Home" component={HomePage} />
+          <Stack.Screen name="Home" component={BottomTabNavigator} />
           <Stack.Screen name="Onboard" component={OnboardPage} />
         </Stack.Navigator>
       </NavigationContainer>
