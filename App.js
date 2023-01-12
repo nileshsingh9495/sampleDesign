@@ -1,11 +1,36 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
+import {SafeAreaView, StyleSheet, View, LogBox} from 'react-native';
+import GlobalFont from 'react-native-global-font';
+
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import HomePage from './src/screen/HomePage';
+import OnboardPage from './src/screen/OnboardPage';
+
+const Stack = createNativeStackNavigator();
+const genericStackOptions = {
+  headerShown: false,
+  animationEnabled: false,
+};
+LogBox.ignoreAllLogs();
 
 const App = () => {
+  useEffect(() => {
+    GlobalFont.applyGlobal('SF-Pro-Rounded-Regular');
+    GlobalFont.applyGlobal('SF-Pro-Rounded-Bold');
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.textStyle}>App</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={genericStackOptions}
+          initialRouteName="Onboard">
+          <Stack.Screen name="Home" component={HomePage} />
+          <Stack.Screen name="Onboard" component={OnboardPage} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaView>
   );
 };
 
@@ -15,6 +40,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFF',
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
   textStyle: {
     color: '#000',
