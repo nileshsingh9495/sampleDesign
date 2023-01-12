@@ -11,51 +11,11 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import PremiumImage from '../assets/home/Premium.svg';
 import SearchImage from '../assets/home/Search.svg';
-import ScanSingle from '../assets/home/Scan-Single.svg';
-import ScanBatch from '../assets/home/Scan-Batch.svg';
-import ScanOCR from '../assets/home/Scan-OCR.svg';
-import SceneImage from '../assets/home/SceneImage.png';
 import Pro from '../assets/home/Pro.svg';
 
+import {INFO_DATA, RECENT_DATA} from '../constants';
+
 const width = Dimensions.get('window').width;
-
-const INFO_DATA = [
-  {
-    image: <ScanSingle />,
-    text: 'Single Scan',
-  },
-  {
-    image: <ScanBatch />,
-    text: 'Batch Scan',
-  },
-  {
-    image: <ScanOCR />,
-    text: 'Scan to Text',
-  },
-];
-
-const RECENT_DATA = [
-  {
-    id: 1,
-    image: SceneImage,
-    posted: '2d ago',
-  },
-  {
-    id: 2,
-    image: SceneImage,
-    posted: '3d ago',
-  },
-  {
-    id: 3,
-    image: SceneImage,
-    posted: '4d ago',
-  },
-  {
-    id: 4,
-    image: SceneImage,
-    posted: '5d ago',
-  },
-];
 
 const RenderWelcomeView = () => {
   return (

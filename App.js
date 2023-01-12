@@ -1,10 +1,9 @@
 import React, {useEffect} from 'react';
-import {SafeAreaView, StyleSheet, View, LogBox} from 'react-native';
+import {SafeAreaView, StyleSheet, LogBox} from 'react-native';
 import GlobalFont from 'react-native-global-font';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import HomePage from './src/screen/HomePage';
 import OnboardPage from './src/screen/OnboardPage';
 import BottomTabNavigator from './src/screen/BottomTabNavigator';
 
@@ -13,6 +12,7 @@ const genericStackOptions = {
   headerShown: false,
   animationEnabled: false,
 };
+
 LogBox.ignoreAllLogs();
 
 const App = () => {
@@ -26,7 +26,7 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={genericStackOptions}
-          initialRouteName="Home">
+          initialRouteName="Onboard">
           <Stack.Screen name="Home" component={BottomTabNavigator} />
           <Stack.Screen name="Onboard" component={OnboardPage} />
         </Stack.Navigator>
@@ -41,8 +41,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFF',
-    // justifyContent: 'center',
-    // alignItems: 'center',
   },
   textStyle: {
     color: '#000',

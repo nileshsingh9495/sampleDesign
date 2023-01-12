@@ -1,24 +1,19 @@
 /* eslint-disable prettier/prettier */
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
+
 import HomePage from './HomePage';
-import Cards from '../components/Cards';
 import FeedsImage from '../assets/menu/Feeds.svg';
 import SettingsImage from '../assets/menu/Settings.svg';
 import PlusImage from '../assets/menu/Plus.svg';
 import Setting from './Setting';
 import Add from './Add';
-
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-  Pressable,
-} from 'react-native';
-
-const width = Dimensions.get('window').width;
 
 const Tab = createBottomTabNavigator();
 
@@ -73,20 +68,14 @@ const MyTabBar = ({state, descriptors, navigation}) => {
               flex: 1,
               alignItems: 'center',
               justifyContent: 'center',
-              //   borderBottomWidth: 3,
-              //   borderBottomColor: isFocused ? 'orange' : 'green',
             }}>
             {label.toLowerCase() === 'add' ? (
               <View>
                 <View
                   style={{
-                    // marginTop: 10,
-                    // marginBottom: 7,
                     position: 'absolute',
                     backgroundColor: '#49A6FC',
                     left: -26,
-                    // right: 0,
-                    // bottom: 0,
                     top: -60,
                     width: 55,
                     height: 55,
@@ -102,7 +91,6 @@ const MyTabBar = ({state, descriptors, navigation}) => {
                 style={{
                   marginTop: 10,
                   marginBottom: 7,
-                  // position:'absolute'
                 }}>
                 {getIcon(label, isFocused)}
               </View>
@@ -127,16 +115,8 @@ export default function BottomTabNavigator() {
           fontSize: 16,
         },
         tabBarStyle: {
-          //   position: 'absolute',
-          //   backgroundColor: 'skyblue',
-          //   bottom: 25,
-          //   left: 25,
-          //   right: 20,
-          //   elevation: 0,
-          //   height: 80,
           borderRadius: 15,
         },
-        // tabBarActiveTintColor: '#3777de',
         tabBarIconStyle: {display: 'none'},
       }}>
       <Tab.Screen name="Feeds" component={HomePage} />
@@ -155,7 +135,6 @@ const styles = StyleSheet.create({
     left: 0,
     height: 70,
     backgroundColor: '#F3F3F3',
-    // borderRadius: 10,
   },
   mainItemContainer: {
     flex: 1,
