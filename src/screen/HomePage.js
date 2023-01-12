@@ -59,14 +59,7 @@ const RECENT_DATA = [
 
 const RenderWelcomeView = () => {
   return (
-    <View
-      style={{
-        width: '100%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginVertical: 25,
-      }}>
+    <View style={styles.welcomeView}>
       <View>
         <Text style={styles.eveningText}>Good Evening</Text>
         <Text style={styles.welcomeText}>Welcome back</Text>
@@ -76,44 +69,34 @@ const RenderWelcomeView = () => {
   );
 };
 const RenderUnlockPremiumView = () => {
-  const premiumGradinet = ['#0563DB', '#0F8CFF'];
-  // const premiumGradinet = ['#0563DB', '#0F8CFF', '#0252CA','#49A6FC'];
+  const premiumGradinet = ['#0563DB', '#0F8CFF', '#0252CA'];
   return (
-    <LinearGradient
-      // locations={[0,1]}
-      colors={premiumGradinet}
-      style={{
-        width: '100%',
-        padding: 16,
-        borderRadius: 10,
-      }}
-      useAngle={true}
-      angle={275}
-      // angleCenter={}
-      // start={{x: 0.6, y: 0}}
-      start={{x: 0.0, y: 0.25}}
-      // end={{x: 0.5, y: 1.0}}
-    >
-      <Text style={styles.unlockText}>Unlock Premium</Text>
-      <Text style={styles.unlockContent}>
-        Create Unlimited HD Scan & Picture to Text Scans without watermarks
-      </Text>
-      <View
-        style={{
-          position: 'absolute',
-          right: 0,
-        }}>
-        <Pro />
-      </View>
-    </LinearGradient>
+    <View style={styles.premiumView}>
+      <LinearGradient
+        colors={premiumGradinet}
+        style={styles.premiumBox}
+        useAngle={true}
+        angle={325}
+        start={{x: 0.0, y: 0.25}}>
+        <Text style={styles.unlockText}>Unlock Premium</Text>
+        <Text style={styles.unlockContent}>
+          Create Unlimited HD Scan & Picture to Text Scans without watermarks
+        </Text>
+        <View style={styles.premiumImageStyle}>
+          <Pro />
+        </View>
+      </LinearGradient>
+    </View>
   );
 };
 
 const RenderSearch = () => {
   return (
-    <View style={styles.searchView}>
-      <SearchImage />
-      <Text style={styles.searchText}>Search through your scans</Text>
+    <View style={styles.searchBox}>
+      <View style={styles.searchView}>
+        <SearchImage />
+        <Text style={styles.searchText}>Search through your scans</Text>
+      </View>
     </View>
   );
 };
@@ -132,7 +115,26 @@ const RenderInfo = () => {
     </View>
   );
 };
-const RenderRecentSearch = () => {
+
+const ScanCard = ({data = {}}) => {
+  const {image, id, posted} = data;
+  return (
+    <View
+      style={{
+        width: width / 2,
+        height: width / 2,
+        marginRight: 16,
+      }}
+      key={id}>
+      <Image
+        source={image}
+        style={{width: '100%', height: '100%', borderRadius: 8}}
+      />
+      <Text style={styles.postedText}>{posted}</Text>
+    </View>
+  );
+};
+const RenderRecentScans = () => {
   return (
     <View style={styles.recentView}>
       <Text style={styles.recentText}>Recent Scans</Text>
@@ -141,23 +143,7 @@ const RenderRecentSearch = () => {
         horizontal
         showsHorizontalScrollIndicator={false}
         pagingEnabled
-        renderItem={({item}) => {
-          return (
-            <View
-              style={{
-                width: width / 2,
-                height: width / 2,
-                marginRight: 16,
-              }}
-              key={item.id}>
-              <Image
-                source={item?.image}
-                style={{width: '100%', height: '100%', borderRadius: 8}}
-              />
-              <Text style={styles.postedText}>{item.posted}</Text>
-            </View>
-          );
-        }}
+        renderItem={({item}) => <ScanCard data={item} />}
         keyExtractor={item => item.id}
         bounces={false}
       />
@@ -172,7 +158,7 @@ const HomePage = () => {
       <RenderUnlockPremiumView />
       <RenderSearch />
       <RenderInfo />
-      <RenderRecentSearch />
+      <RenderRecentScans />
     </View>
   );
 };
@@ -183,8 +169,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#E5E5E5',
-    // justifyContent: 'center',
     alignItems: 'center',
+    // paddingHorizontal: 24,
+  },
+  welcomeView: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 25,
     paddingHorizontal: 24,
   },
   eveningText: {
@@ -199,6 +192,15 @@ const styles = StyleSheet.create({
     fontFamily: 'SF-Pro-Rounded-Regular',
     color: '#9B9B9B',
   },
+  premiumView: {
+    paddingHorizontal: 24,
+    width: '100%',
+  },
+  premiumBox: {
+    width: '100%',
+    padding: 16,
+    borderRadius: 10,
+  },
   unlockText: {
     fontSize: 18,
     fontWeight: '700',
@@ -212,6 +214,14 @@ const styles = StyleSheet.create({
     color: '#fff',
     paddingRight: 32,
     marginTop: 6,
+  },
+  premiumImageStyle: {
+    position: 'absolute',
+    right: 0,
+  },
+  searchBox: {
+    paddingHorizontal: 24,
+    width: '100%',
   },
   searchText: {
     fontSize: 12,
@@ -232,7 +242,8 @@ const styles = StyleSheet.create({
   renderInfoView: {
     width: '100%',
     flexDirection: 'row',
-    marginBottom: 20,
+    marginBottom: 15,
+    paddingHorizontal: 24,
   },
   infoBox: {
     flex: 1,
@@ -249,6 +260,7 @@ const styles = StyleSheet.create({
   },
   recentView: {
     width: '100%',
+    paddingLeft: 24,
     // flexDirection: 'row',
   },
   postedText: {
